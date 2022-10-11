@@ -1,0 +1,53 @@
+<div class="animate__animated animate__fadeIn animate__faster">
+    <h2>Por Region</h2>
+    <hr>
+    
+    <div class="row">
+        <div class="col">
+            <app-pais-input 
+                [placeholder] = placeholder
+                (onEnter)="buscar( $event )"
+                (onDebounce)="sugerencias( $event )">
+            </app-pais-input>
+        </div>
+    </div>
+    
+    <hr>
+</div>
+
+
+<h5>Seleccione la region <small>{{regionActiva | titlecase}}</small></h5>
+
+<!-- Forma básica de añdir una clase a un componente según una condición -->
+<!-- [class.btn-primary]="region === regionActiva" -->
+
+<!-- Alternativa -->
+<!-- [ngClass]="{
+    'btn-primary': region === regionActiva,
+    'btn-outline-primary': region != regionActiva
+}"  -->
+
+<div class="row">
+    <div class="col">
+        <button *ngFor="let region of regiones"
+            class="btn"
+            [class]="(region === regionActiva) ? 'btn-primary' : 'btn-outline-primary'"            
+            (click)="activarRegion(region)">
+            {{region}}
+        </button>
+    </div>
+</div>
+
+<hr>
+
+<div *ngIf="hayError" 
+    class="alert alert-danger">
+    No se encontró el termino 
+</div>
+
+<div *ngIf="paises.length > 0" class="row">
+    <div class="col">
+        <app-pais-tabla [paises] = paises></app-pais-tabla>
+    </div>
+</div>
+
